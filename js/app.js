@@ -1,7 +1,7 @@
 /*-------------------------------- Constants --------------------------------*/
 
 /*---------------------------- Variables (state) ----------------------------*/
- let state ={
+ let state = {
     boredom: 0,
     hunger: 0,
     sleepiness: 0,
@@ -21,33 +21,39 @@ const feedBtnEl = document.querySelector('#feed');
 const sleepBtnEl = document.querySelector('#sleep');
 const gameMessageEl = document.querySelector('#message');
 const resetBtnEl = document.querySelector('#restart');
-const div = document.querySelector('.hidden')
+
 /*-------------------------------- Functions --------------------------------*/
 
-function init () {
-gameOver = false
-timer = setInterval(runGame, 2000) 
-    
 
-}
-function runGame(){
+function init () {
+    resetBtnEl.classList.add('hidden')
+    gameMessageEl.classList.add('hidden')
+    timer = setInterval(runGame, 2000) 
+    state = {
+        boredom: 0,
+        hunger: 0,
+        sleepiness: 0,
+        };
+    gameOver = false
+
+
+
+function runGame() {
    updateStates();
    checkGameOver();
    render();
    
 }
 
-function render(){
+function render() {
     boredomStatEl.textContent = state.boredom
     hungerStatEl.textContent =  state.hunger
     sleepinessStatEl.textContent = state.sleepiness
 
     if (gameOver === true){
             clearInterval(timer);
-            div.class.hidden;
-        
-            resetBtnEl.class.remove('hidden')
-            gameMessageEl.class.remove('hidden')
+            resetBtnEl.classList.remove('hidden')
+            gameMessageEl.classList.remove('hidden')
 
         }
     }
@@ -68,12 +74,35 @@ function checkGameOver(){
         return;
         }
     }
+};
+
+function playBtnClick() {
+    state.boredom = 0 
+    render();
+
     
+}
+function feedBtnClick() {
+    state.hunger = 0 
+    render();
 
+    
+}
+function sleepBtnClick() {
+    state.sleepiness = 0 
+    render();
 
+    
 }
 /*----------------------------- Event Listeners -----------------------------*/
-init()
+
+playBtnEl.addEventListener('click', playBtnClick)
+feedBtnEl.addEventListener('click', feedBtnClick)
+sleepBtnEl.addEventListener('click', sleepBtnClick)
+resetBtnEl.addEventListener('click', init)
+gameMessageEl.addEventListener('click', init)
+
+init();
 
 // 1) Define the required variables used to track the state of the game.
 
